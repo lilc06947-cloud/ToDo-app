@@ -8,7 +8,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        ArrayList<String> tasks = new ArrayList<>();
+        ArrayList<Task> tasks = new ArrayList<>();
         
         loadTasks(tasks);
 
@@ -47,7 +47,7 @@ public class Main {
         scanner.close();
     }
 
-    public static void loadTasks(ArrayList<String> tasks){
+    public static void loadTasks(ArrayList<Task> tasks){
         try {
 
             File file = new File("tasks.txt");
@@ -59,7 +59,7 @@ public class Main {
                 String line;
 
                 while ((line = reader.readLine()) != null) {
-                tasks.add(line);
+                tasks.add(new Task(line));
                 }
 
                 reader.close();
@@ -71,27 +71,27 @@ public class Main {
         }
     }
 
-    public static void addTask(Scanner scanner, ArrayList<String> tasks){
+    public static void addTask(Scanner scanner, ArrayList<Task> tasks){
         
         System.out.println("タスクを入力してください:");
         
         String task = scanner.nextLine();
 
-        tasks.add(task);
+        tasks.add(new Task(task));
 
         System.out.println("追加しました！");
     }
 
-    public static void showTasks(ArrayList<String> tasks) {
+    public static void showTasks(ArrayList<Task> tasks) {
             
         System.out.println("==== タスク一覧 ====");
 
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + ". " + tasks.get(i));
+            System.out.println((i + 1) + ". " + tasks.get(i).name);
         }
     }
 
-    public static void deleteTask(Scanner scanner, ArrayList<String> tasks){
+    public static void deleteTask(Scanner scanner, ArrayList<Task> tasks){
         
         System.out.println("削除する番号を入力してください:");
 
@@ -110,7 +110,7 @@ public class Main {
         }        
     }
 
-    public static void saveTasks(ArrayList<String> tasks){
+    public static void saveTasks(ArrayList<Task> tasks){
         
         System.out.println("終了します");
                 
@@ -118,10 +118,10 @@ public class Main {
 
             BufferedWriter writer = new BufferedWriter(new FileWriter("tasks.txt"));
 
-            for (String task : tasks) {
-                writer.write(task);
-                writer.newLine();
-            }
+            for (Task t : tasks) {
+                    writer.write(t.name);
+                    writer.newLine();
+                }
 
             writer.close();
 
