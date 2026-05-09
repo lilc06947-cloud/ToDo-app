@@ -14,7 +14,8 @@ public class Main {
             System.out.println("==== ToDo App ====");
             System.out.println("1. タスク追加");
             System.out.println("2. タスク一覧");
-            System.out.println("3. 終了");
+            System.out.println("3. タスク削除");
+            System.out.println("4. 終了");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -37,6 +38,25 @@ public class Main {
                 }
 
             } else if (choice == 3) {
+
+
+                System.out.println("削除する番号を入力してください:");
+
+                int deleteIndex = scanner.nextInt();
+                scanner.nextLine();
+
+                if (deleteIndex > 0 && deleteIndex <= tasks.size()) {
+
+                    tasks.remove(deleteIndex - 1);
+
+                    System.out.println("削除しました！");
+
+                } else {
+
+                    System.out.println("無効な番号です");
+                }
+            }
+             else if (choice == 4) {
 
                 System.out.println("終了します");
                 break;
