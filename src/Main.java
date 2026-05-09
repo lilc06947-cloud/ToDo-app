@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.*;
 
 public class Main {
 
@@ -8,6 +9,27 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         ArrayList<String> tasks = new ArrayList<>();
+        try {
+
+            File file = new File("tasks.txt");
+
+            if (file.exists()) {
+
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                tasks.add(line);
+                }
+
+                reader.close();
+            }
+
+        } catch (IOException e) {
+
+            System.out.println("ファイル読み込みエラー");
+        }
 
         while (true) {
 
@@ -59,6 +81,23 @@ public class Main {
              else if (choice == 4) {
 
                 System.out.println("終了します");
+                
+                try {
+
+                    BufferedWriter writer = new BufferedWriter(new FileWriter("tasks.txt"));
+
+                    for (String task : tasks) {
+                        writer.write(task);
+                        writer.newLine();
+                    }
+
+                    writer.close();
+
+                } catch (IOException e) {
+
+                    System.out.println("ファイル保存エラー");
+                }
+                
                 break;
             }
         }
