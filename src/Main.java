@@ -68,9 +68,7 @@ public class Main {
 
                     String name = parts[1];
 
-                    Task task = new Task(name);
-
-                    task.completed = completed;
+                    Task task = new Task(name, completed);
 
                     tasks.add(task);
                 }
@@ -90,7 +88,7 @@ public class Main {
         
         String task = scanner.nextLine();
 
-        tasks.add(new Task(task));
+        tasks.add(new Task(task, false));
 
         System.out.println("追加しました！");
     }
@@ -101,17 +99,8 @@ public class Main {
 
         for (int i = 0; i < tasks.size(); i++) {
             
-            Task task = tasks.get(i);
-
-            String status;
-
-            if(task.completed){
-                status = "[×]";
-            }else{
-                status = "[]";
-            }
-
-            System.out.println((i + 1) + ". " + status + " " + task.name);
+            System.out.println((i + 1) + ". " + tasks.get(i));
+        
         }
     }
 
@@ -145,7 +134,7 @@ public class Main {
 
             Task task = tasks.get(index - 1);
 
-            task.completed = !task.completed;
+            task.setCompleted(!task.isCompleted());
 
             System.out.println("完了状態を変更しました！");
 
@@ -164,7 +153,7 @@ public class Main {
             BufferedWriter writer = new BufferedWriter(new FileWriter("tasks.txt"));
 
             for (Task t : tasks) {
-                    writer.write(t.completed + "," + t.name);
+                    writer.write(t.isCompleted() + "," + t.getName());
                     writer.newLine();
                 }
 
