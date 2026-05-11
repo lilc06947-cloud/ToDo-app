@@ -18,7 +18,8 @@ public class Main {
             System.out.println("1. タスク追加");
             System.out.println("2. タスク一覧");
             System.out.println("3. タスク削除");
-            System.out.println("4. 終了");
+            System.out.println("4. 完了切り替え");
+            System.out.println("5. 終了");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -35,8 +36,10 @@ public class Main {
 
                 deleteTask(scanner, tasks);
 
+            } else if (choice == 4) {
+                toggleTaskCompletion(scanner, tasks);
             }
-             else if (choice == 4) {
+             else if (choice == 5) {
 
                 saveTasks(tasks);
 
@@ -59,7 +62,17 @@ public class Main {
                 String line;
 
                 while ((line = reader.readLine()) != null) {
-                tasks.add(new Task(line));
+                    String[] parts = line.split(",");
+
+                    boolean completed = Boolean.parseBoolean(parts[0]);
+
+                    String name = parts[1];
+
+                    Task task = new Task(name);
+
+                    task.completed = completed;
+
+                    tasks.add(task);
                 }
 
                 reader.close();
@@ -121,6 +134,27 @@ public class Main {
         }        
     }
 
+    public static void toggleTaskCompletion(Scanner scanner, ArrayList<Task> tasks) {
+
+        System.out.println("完了状態を切り替える番号を入力してください:");
+
+        int index = scanner.nextInt();
+        scanner.nextLine();
+
+        if (index > 0 && index <= tasks.size()) {
+
+            Task task = tasks.get(index - 1);
+
+            task.completed = !task.completed;
+
+            System.out.println("完了状態を変更しました！");
+
+        } else {
+
+            System.out.println("無効な番号です");
+        }
+    }
+
     public static void saveTasks(ArrayList<Task> tasks){
         
         System.out.println("終了します");
@@ -130,7 +164,7 @@ public class Main {
             BufferedWriter writer = new BufferedWriter(new FileWriter("tasks.txt"));
 
             for (Task t : tasks) {
-                    writer.write(t.name);
+                    writer.write(t.completed + "," + t.name);
                     writer.newLine();
                 }
 
