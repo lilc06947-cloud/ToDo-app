@@ -87,7 +87,18 @@ public class Main {
         System.out.println("==== タスク一覧 ====");
 
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + ". " + tasks.get(i).name);
+            
+            Task task = tasks.get(i);
+
+            String status;
+
+            if(task.completed){
+                status = "[×]";
+            }else{
+                status = "[]";
+            }
+
+            System.out.println((i + 1) + ". " + status + " " + task.name);
         }
     }
 
